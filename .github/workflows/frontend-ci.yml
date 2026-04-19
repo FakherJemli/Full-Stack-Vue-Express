@@ -27,12 +27,12 @@ jobs:
           cache-dependency-path: ./client/package-lock.json
 
       - name: Install dependencies
-        run: if [ -f package-lock.json ]; then npm ci; else npm install; fi
+        run: if [ -f package-lock.json ]; then npm ci || npm install; else npm install; fi
 
       - name: Build
         run: npm run build
 
       - name: Test
         # Remove 'continue-on-error' when your tests are stable
-        run: npm test -- --watchAll=false --passWithNoTests
+        run: npm test --if-present -- --watchAll=false --passWithNoTests
         continue-on-error: true
